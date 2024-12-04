@@ -16,3 +16,5 @@
     ------Skickade in Felmedelandet till Copilot------
 
 3: Still have the same problem
+
+4: i installed inquirer in wsl terminal first by mistake could that be the problem
