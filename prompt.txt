@@ -55,3 +55,5 @@ const job = schedule.scheduleJob('*/5 * * * *', bookedOperation);
 '0 0 * * 0': Every week on Sunday at midnight
 '0 0 1 * *': Every month on the 1st at midnight
 and add one more * for seconds
+
+last prompt make a README for this project(see README for result)
