@@ -1,3 +1,4 @@
+//Prompt 1
 const schedule = require('node-schedule');
 const fs = require('fs');
 
@@ -14,3 +15,12 @@ function bookedOperation() {
 const job = schedule.scheduleJob('* * * * *', bookedOperation);
 
 console.log('Scheduled booked operation to run every minute.');
+//--------------------------------------------------------------------------------------------
+
+//My Code
+function stop() {
+    job.cancel();
+    console.log('Scheduled booked operation stopped.');
+}
+
+setTimeout(stop, 5000);
