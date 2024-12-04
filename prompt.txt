@@ -19,3 +19,17 @@ prompt 1:   Can you make a small utility program with automatic booked operation
 
             console.log('Scheduled booked operation to run every minute.');
             */
+
+prompt 2:   make it so that my job creates a text file every time
+
+// Function to perform the booked operation, promt 1, updated promt 2
+function bookedOperation() {
+    const timestamp = new Date().toISOString();
+    const filename = `log_${timestamp.replace(/[:.]/g, '-')}.txt`; // Replace colons and dots to make it a valid filename
+    const content = `Booked operation executed at ${timestamp}\n`;
+
+    fs.writeFile(filename, content, (err) => {
+        if (err) throw err;
+        console.log(`Booked operation executed and logged in ${filename}`);
+    });
+}
