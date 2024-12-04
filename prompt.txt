@@ -33,3 +33,24 @@ function bookedOperation() {
         console.log(`Booked operation executed and logged in ${filename}`);
     });
 }
+
+Some Explaination prompts to learn: 
+-----
+function bookedOperation() {
+    const timestamp = new Date().toISOString();
+    fs.appendFile('log.txt', `Booked operation executed at ${timestamp}\n`, (err) => {
+        if (err) throw err;
+        console.log(`Booked operation executed at ${timestamp}`);
+    });
+}
+Explain This
+------
+where do i change the timer for my script
+const job = schedule.scheduleJob('*/5 * * * *', bookedOperation);
+
+'* * * * *': Every minute
+'*/5 * * * *': Every 5 minutes
+'0 * * * *': Every hour
+'0 0 * * *': Every day at midnight
+'0 0 * * 0': Every week on Sunday at midnight
+'0 0 1 * *': Every month on the 1st at midnight
