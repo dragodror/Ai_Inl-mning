@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "fs-extra": "^11.2.0",
-    "inquirer": "^12.1.0"
+    "node-schedule": "^2.1.1"
   }
 }

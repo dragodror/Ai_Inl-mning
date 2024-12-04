@@ -1,131 +1,31 @@
-//Code from prompt 1 and 2
-const inquirer = require('inquirer');
-const fs = require('fs-extra');
-const path = require('path');
+//Prompt 1
+const schedule = require('node-schedule');
+const fs = require('fs');
 
-async function mainMenu() {
-  try {
-    const answers = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'action',
-        message: 'Välj en åtgärd:',
-        choices: [
-          'Flytta mellan mappar',
-          'Omdöp alla filer i en mapp',
-          'Partiell omdöpning av filer',
-          'Avsluta'
-        ]
-      }
-    ]);
+// Function to perform the booked operation, promt 1, 
+function bookedOperation() {
+    const timestamp = new Date().toISOString();
+    const filename = `log_${timestamp.replace(/[:.]/g, '-')}.txt`; // Replace colons and dots to make it a valid filename
+    const content = `Booked operation executed at ${timestamp}\n`;
 
-    switch (answers.action) {
-      case 'Flytta mellan mappar':
-        await moveBetweenFolders();
-        break;
-      case 'Omdöp alla filer i en mapp':
-        await renameAllFiles();
-        break;
-      case 'Partiell omdöpning av filer':
-        await partialRenameFiles();
-        break;
-      case 'Avsluta':
-        console.log('Avslutar...');
-        process.exit();
-    }
-  } catch (error) {
-    console.error('Ett fel uppstod:', error);
-  }
-}
-
-async function moveBetweenFolders() {
-  try {
-    const answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'source',
-        message: 'Ange källmappens sökväg:'
-      },
-      {
-        type: 'input',
-        name: 'destination',
-        message: 'Ange destinationsmappens sökväg:'
-      }
-    ]);
-
-    await fs.move(answers.source, answers.destination);
-    console.log('Mapparna har flyttats.');
-  } catch (err) {
-    console.error('Fel vid flyttning av mappar:', err);
-  }
-
-  mainMenu();
-}
-
-async function renameAllFiles() {
-  try {
-    const answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'folder',
-        message: 'Ange mappens sökväg:'
-      },
-      {
-        type: 'input',
-        name: 'newName',
-        message: 'Ange det nya namnet för filerna:'
-      }
-    ]);
-
-    const files = await fs.readdir(answers.folder);
-    files.forEach((file, index) => {
-      const ext = path.extname(file);
-      const newFileName = `${answers.newName}_${index + 1}${ext}`;
-      fs.renameSync(path.join(answers.folder, file), path.join(answers.folder, newFileName));
+    fs.writeFile(filename, content, (err) => {
+        if (err) throw err;
+        console.log(`Booked operation executed and logged in ${filename}`);
     });
-    console.log('Alla filer har omdöpts.');
-  } catch (err) {
-    console.error('Fel vid omdöpning av filer:', err);
-  }
-
-  mainMenu();
 }
 
-async function partialRenameFiles() {
-  try {
-    const answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'folder',
-        message: 'Ange mappens sökväg:'
-      },
-      {
-        type: 'input',
-        name: 'pattern',
-        message: 'Ange regex-mönstret för att matcha filer:'
-      },
-      {
-        type: 'input',
-        name: 'replacement',
-        message: 'Ange ersättningstexten:'
-      }
-    ]);
+// Schedule the booked operation to run every minute
+const job = schedule.scheduleJob('*/3 * * * * *', bookedOperation);
 
-    const regex = new RegExp(answers.pattern);
-    const files = await fs.readdir(answers.folder);
-    files.forEach((file) => {
-      if (regex.test(file)) {
-        const newFileName = file.replace(regex, answers.replacement);
-        fs.renameSync(path.join(answers.folder, file), path.join(answers.folder, newFileName));
-      }
-    });
-    console.log('Filerna har omdöpts delvis.');
-  } catch (err) {
-    console.error('Fel vid partiell omdöpning av filer:', err);
-  }
+console.log('Scheduled booked operation to run every 15 seconds.');
+//--------------------------------------------------------------------------------------------
 
-  mainMenu();
+//My Code
+function stop() {
+
+    job.cancel();
+    console.log('Scheduled booked operation stopped.');
 }
 
-mainMenu();
-//--------------------------------------------
+// Stop the booked operation after 5 minutes
+setTimeout(stop, 300000);
