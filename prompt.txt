@@ -1,0 +1,5 @@
+1:  Filorganisationsverktyg - med TUI -Text User Interface - som tillåter flytt mellan mappar,
+    omdöpning av alla filer i en mapp, partiell omdöpning av filer enligt exempelvis ett regex-mönster 
+    eller med ett tillägg konkatenerat till befintligt namn. Kan du skapa detta
+
+2:  
