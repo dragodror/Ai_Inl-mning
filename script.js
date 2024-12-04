@@ -1,53 +1,58 @@
+//Code from prompt 1 and 2
 const inquirer = require('inquirer');
 const fs = require('fs-extra');
 const path = require('path');
 
 async function mainMenu() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'action',
-      message: 'Välj en åtgärd:',
-      choices: [
-        'Flytta mellan mappar',
-        'Omdöp alla filer i en mapp',
-        'Partiell omdöpning av filer',
-        'Avsluta'
-      ]
-    }
-  ]);
+  try {
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'action',
+        message: 'Välj en åtgärd:',
+        choices: [
+          'Flytta mellan mappar',
+          'Omdöp alla filer i en mapp',
+          'Partiell omdöpning av filer',
+          'Avsluta'
+        ]
+      }
+    ]);
 
-  switch (answers.action) {
-    case 'Flytta mellan mappar':
-      moveBetweenFolders();
-      break;
-    case 'Omdöp alla filer i en mapp':
-      renameAllFiles();
-      break;
-    case 'Partiell omdöpning av filer':
-      partialRenameFiles();
-      break;
-    case 'Avsluta':
-      console.log('Avslutar...');
-      process.exit();
+    switch (answers.action) {
+      case 'Flytta mellan mappar':
+        await moveBetweenFolders();
+        break;
+      case 'Omdöp alla filer i en mapp':
+        await renameAllFiles();
+        break;
+      case 'Partiell omdöpning av filer':
+        await partialRenameFiles();
+        break;
+      case 'Avsluta':
+        console.log('Avslutar...');
+        process.exit();
+    }
+  } catch (error) {
+    console.error('Ett fel uppstod:', error);
   }
 }
 
 async function moveBetweenFolders() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'source',
-      message: 'Ange källmappens sökväg:'
-    },
-    {
-      type: 'input',
-      name: 'destination',
-      message: 'Ange destinationsmappens sökväg:'
-    }
-  ]);
-
   try {
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'source',
+        message: 'Ange källmappens sökväg:'
+      },
+      {
+        type: 'input',
+        name: 'destination',
+        message: 'Ange destinationsmappens sökväg:'
+      }
+    ]);
+
     await fs.move(answers.source, answers.destination);
     console.log('Mapparna har flyttats.');
   } catch (err) {
@@ -58,20 +63,20 @@ async function moveBetweenFolders() {
 }
 
 async function renameAllFiles() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'folder',
-      message: 'Ange mappens sökväg:'
-    },
-    {
-      type: 'input',
-      name: 'newName',
-      message: 'Ange det nya namnet för filerna:'
-    }
-  ]);
-
   try {
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'folder',
+        message: 'Ange mappens sökväg:'
+      },
+      {
+        type: 'input',
+        name: 'newName',
+        message: 'Ange det nya namnet för filerna:'
+      }
+    ]);
+
     const files = await fs.readdir(answers.folder);
     files.forEach((file, index) => {
       const ext = path.extname(file);
@@ -87,25 +92,25 @@ async function renameAllFiles() {
 }
 
 async function partialRenameFiles() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'folder',
-      message: 'Ange mappens sökväg:'
-    },
-    {
-      type: 'input',
-      name: 'pattern',
-      message: 'Ange regex-mönstret för att matcha filer:'
-    },
-    {
-      type: 'input',
-      name: 'replacement',
-      message: 'Ange ersättningstexten:'
-    }
-  ]);
-
   try {
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'folder',
+        message: 'Ange mappens sökväg:'
+      },
+      {
+        type: 'input',
+        name: 'pattern',
+        message: 'Ange regex-mönstret för att matcha filer:'
+      },
+      {
+        type: 'input',
+        name: 'replacement',
+        message: 'Ange ersättningstexten:'
+      }
+    ]);
+
     const regex = new RegExp(answers.pattern);
     const files = await fs.readdir(answers.folder);
     files.forEach((file) => {
@@ -123,3 +128,4 @@ async function partialRenameFiles() {
 }
 
 mainMenu();
+//--------------------------------------------

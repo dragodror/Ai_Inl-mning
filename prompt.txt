@@ -2,4 +2,17 @@
     omdöpning av alla filer i en mapp, partiell omdöpning av filer enligt exempelvis ett regex-mönster 
     eller med ett tillägg konkatenerat till befintligt namn. Kan du skapa detta
 
-2:  
+2:  C:\Users\Philip\Documents\School Projekts\Ai Uppgifter\Ai_InlämningsUppgift>node script.js 
+    C:\Users\Philip\Documents\School Projekts\Ai Uppgifter\Ai_InlämningsUppgift\script.js:6 const 
+    answers = await inquirer.prompt([ ^TypeError: inquirer.prompt is not a function at mainMenu 
+    (C:\Users\Philip\Documents\School Projekts\Ai Uppgifter\Ai_InlämningsUppgift\script.js:6:34) 
+    at Object.<anonymous> (C:\Users\Philip\Documents\School Projekts\Ai Uppgifter\Ai_InlämningsUppgift\script.js:125:1) 
+    at Module._compile (node:internal/modules/cjs/loader:1546:14) at Object..js 
+    (node:internal/modules/cjs/loader:1689:10) at Module.load (node:internal/modules/cjs/loader:1318:32) 
+    at Function._load (node:internal/modules/cjs/loader:1128:12) at TracingChannel.traceSync 
+    (node:diagnostics_channel:315:14) at wrapModuleLoad (node:internal/modules/cjs/loader:218:24) 
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5) at 
+    node:internal/main/run_main_module:36:49
+    ------Skickade in Felmedelandet till Copilot------
+
+3: Still have the same problem
